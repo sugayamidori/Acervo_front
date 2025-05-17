@@ -1,9 +1,11 @@
 export const ROLE = {
   admin: "ADMINISTRADOR",
-  user: "MEMBRO",
+  member: "MEMBRO",
+  librarian: "BIBLIOTECARIO",
 };
 
 export const USER_TYPES = {
-  admin: "admin",
-  user: "user",
+  admin: "ADMINISTRADOR",
+  member: "MEMBRO",
+  librarian: "BIBLIOTECARIO",
 } as const;

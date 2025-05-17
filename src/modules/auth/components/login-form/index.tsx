@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import Link from "next/link";
 
 import { Eye, EyeOff } from "lucide-react";
 
@@ -16,14 +20,25 @@ import {
 import { Input } from "@acervo/components/ui/input";
 import { Loader } from "@acervo/components/loader/index";
 
+import { loginAdminSchema } from "./schemas";
+import { loginFormInputsProps } from "./types";
+
 export const LoginForm = () => {
+  const schema = loginAdminSchema();
+  const form = useForm<loginFormInputsProps>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
   return (
-    <Form>
+    <Form {...form}>
       <form className="w-full">
         {" "}
         <FormField
@@ -46,7 +61,7 @@ export const LoginForm = () => {
                   autoCapitalize="none"
                   autoFocus
                   spellCheck={false}
-                  className="bg-[#F7F7F7] border-1 border-[#707070]"
+                  className="bg-[#F7F7F7] rounded-[4px] border-1 border-[#707070]"
                   required
                   {...field}
                 />
@@ -68,7 +83,7 @@ export const LoginForm = () => {
               <FormControl>
                 <div
                   className={`bg-[#F7F7F7] flex h-10 w-full items-center 
-                          justify-between gap-2 rounded-md border-1 border-[#707070] 
+                          justify-between gap-2 rounded-[4px] border-1 border-[#707070] 
                           px-3 py-2 
                           text-center focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 
                           ${
@@ -111,7 +126,7 @@ export const LoginForm = () => {
           )}
         />
         <Button
-          className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-6 rounded-sm"
+          className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-6 rounded-[4px]"
           disabled={form.formState.isSubmitting}
           type="submit"
         >
@@ -122,11 +137,10 @@ export const LoginForm = () => {
           )}
         </Button>
         <div className="mb-2 text-center text-sm">
-          Já tem uma conta? {""}
-          <span className="text-[#007A7C]">Clique aqui</span>
-          {/* <Link to="/" className="underline underline-offset-4">
-										Login
-									</Link>  */}
+          Não tem uma conta? {""}
+          <Link href="/" className="text-[#007A7C]">
+            Clique aqui
+          </Link>
         </div>
       </form>
     </Form>

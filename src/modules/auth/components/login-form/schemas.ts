@@ -1,20 +1,7 @@
 import { z } from "zod";
-import { ROLE } from "@acervo/constants/roles";
 
-export const registerAdminSchema = () => {
-  const roles = Object.values(ROLE) as [string, ...string[]];
+export const loginAdminSchema = () => {
   const schema = z.object({
-    username: z
-      .string({
-        required_error: "Insira seu nome completo",
-      })
-      .min(1, {
-        message: "Mínimo de 1 caracteres",
-      })
-      .max(128, {
-        message: "Máximo de 128 caracteres",
-      })
-      .trim(),
     email: z
       .string({
         required_error: "Insira seu email",
@@ -38,7 +25,6 @@ export const registerAdminSchema = () => {
         message: "Máximo de 12 caracteres",
       })
       .trim(),
-    roles: z.array(z.enum(roles)),
   });
   return schema;
 };
