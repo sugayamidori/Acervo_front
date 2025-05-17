@@ -3,7 +3,7 @@ interface fetchAPIProps {
   options: any;
 }
 
-const baseURL = "http://localhost:8080";
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchAPI = async ({ url, options }: fetchAPIProps) => {
   const response = await fetch(`${baseURL}/${url}`, options);
