@@ -1,6 +1,6 @@
 export const ROLE = {
-  admin: "admin",
-  user: "user",
+  admin: "ADMINISTRADOR",
+  user: "MEMBRO",
 };
 
 export const USER_TYPES = {

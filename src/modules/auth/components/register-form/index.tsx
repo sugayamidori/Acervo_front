@@ -49,9 +49,7 @@ export const RegisterForm = () => {
           name="username"
           render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel htmlFor="username" className="">
-                Nome
-              </FormLabel>
+              <FormLabel htmlFor="username">Nome</FormLabel>
 
               <FormControl
                 className={fieldState.error && "focus-visible:ring-rose-600"}
@@ -62,6 +60,7 @@ export const RegisterForm = () => {
                   autoCapitalize="none"
                   autoFocus
                   spellCheck={false}
+                  className="bg-[#F7F7F7] border-1 border-[#707070]"
                   required
                   {...field}
                 />
@@ -92,6 +91,7 @@ export const RegisterForm = () => {
                   autoCapitalize="none"
                   autoFocus
                   spellCheck={false}
+                  className="bg-[#F7F7F7] border-1 border-[#707070]"
                   required
                   {...field}
                 />
@@ -113,8 +113,8 @@ export const RegisterForm = () => {
 
               <FormControl>
                 <div
-                  className={`bg-background border-input flex h-10 w-full items-center 
-                          justify-between gap-2 rounded-md border border-solid 
+                  className={`bg-[#F7F7F7] flex h-10 w-full items-center 
+                          justify-between gap-2 rounded-md border-1 border-[#707070] 
                           px-3 py-2 
                           text-center focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 
                           ${
@@ -158,7 +158,7 @@ export const RegisterForm = () => {
         />
 
         <Button
-          className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-4 rounded-sm"
+          className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-6 rounded-sm"
           disabled={form.formState.isSubmitting}
           type="submit"
         >

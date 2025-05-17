@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { ROLE } from "@acervo/constants/roles";
+// import { ROLE } from "@acervo/constants/roles";
 
 export const registerAdminSchema = () => {
-  const roles = Object.values(ROLE) as [string, ...string[]];
+  // const roles = Object.values(ROLE) as [string, ...string[]];
   const schema = z.object({
     username: z
       .string({
@@ -38,7 +38,7 @@ export const registerAdminSchema = () => {
         message: "Máximo de 12 caracteres",
       })
       .trim(),
-    roles: z.array(z.enum(roles)),
+    // roles: z.array(z.enum(roles)),
   });
   return schema;
 };
