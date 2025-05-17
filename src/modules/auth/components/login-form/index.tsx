@@ -1,13 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-// import Link from "next/link";
 
 import { Eye, EyeOff } from "lucide-react";
-
-// import { ROLE } from "@acervo/constants/roles";
 
 import { Button } from "@acervo/components/ui/button";
 import {
@@ -21,56 +16,16 @@ import {
 import { Input } from "@acervo/components/ui/input";
 import { Loader } from "@acervo/components/loader/index";
 
-import { registerFormInputsProps } from "./types";
-import { registerAdminSchema } from "./schemas";
-
-export const RegisterForm = () => {
-  const schema = registerAdminSchema();
-  const form = useForm<registerFormInputsProps>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      // roles: [ROLE.admin],
-    },
-  });
-
+export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
   return (
-    <Form {...form}>
+    <Form>
       <form className="w-full">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel htmlFor="username">Nome</FormLabel>
-
-              <FormControl
-                className={fieldState.error && "focus-visible:ring-rose-600"}
-              >
-                <Input
-                  id="username"
-                  type="text"
-                  autoCapitalize="none"
-                  autoFocus
-                  spellCheck={false}
-                  className="bg-[#F7F7F7] border-1 border-[#707070]"
-                  required
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="absolute text-red-500 bottom-[-18px] right-0 block text-xs" />
-            </FormItem>
-          )}
-        />
-
+        {" "}
         <FormField
           control={form.control}
           name="email"
@@ -101,7 +56,6 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="password"
@@ -156,7 +110,6 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-
         <Button
           className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-6 rounded-sm"
           disabled={form.formState.isSubmitting}
@@ -168,13 +121,12 @@ export const RegisterForm = () => {
             "Entrar"
           )}
         </Button>
-
         <div className="mb-2 text-center text-sm">
           Já tem uma conta? {""}
           <span className="text-[#007A7C]">Clique aqui</span>
-          {/* <Link to="/dashboard" className="underline underline-offset-4">
-            Login
-          </Link>  */}
+          {/* <Link to="/" className="underline underline-offset-4">
+										Login
+									</Link>  */}
         </div>
       </form>
     </Form>
