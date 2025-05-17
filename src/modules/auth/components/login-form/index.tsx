@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import Link from "next/link";
 
 import { Eye, EyeOff } from "lucide-react";
-
-import { ROLE, USER_TYPES } from "@acervo/constants/roles";
 
 import { Button } from "@acervo/components/ui/button";
 import {
@@ -20,68 +19,28 @@ import {
 } from "@acervo/components/ui/form";
 import { Input } from "@acervo/components/ui/input";
 import { Loader } from "@acervo/components/loader/index";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectItem,
-  SelectContent,
-} from "@acervo/components/ui/select";
 
-import { registerFormInputsProps, RegisterComponentProps } from "./types";
-import { registerAdminSchema } from "./schemas";
+import { loginAdminSchema } from "./schemas";
+import { loginFormInputsProps } from "./types";
 
-export const RegisterForm = ({ userType }: RegisterComponentProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const roles = Object.values(ROLE);
-  const shouldShowSelect =
-    userType === USER_TYPES.admin || userType === USER_TYPES.librarian;
-
-  const schema = registerAdminSchema();
-  const form = useForm<registerFormInputsProps>({
+export const LoginForm = () => {
+  const schema = loginAdminSchema();
+  const form = useForm<loginFormInputsProps>({
     resolver: zodResolver(schema),
     defaultValues: {
-      username: "",
       email: "",
       password: "",
-      roles: [],
     },
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
-
   return (
     <Form {...form}>
       <form className="w-full">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel htmlFor="username">Nome</FormLabel>
-
-              <FormControl
-                className={fieldState.error && "focus-visible:ring-rose-600"}
-              >
-                <Input
-                  id="username"
-                  type="text"
-                  autoCapitalize="none"
-                  autoFocus
-                  spellCheck={false}
-                  className="rounded-[4px] bg-[#F7F7F7] border-1 border-[#707070]"
-                  required
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage className="absolute text-red-500 bottom-[-18px] right-0 block text-xs" />
-            </FormItem>
-          )}
-        />
-
+        {" "}
         <FormField
           control={form.control}
           name="email"
@@ -102,7 +61,7 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                   autoCapitalize="none"
                   autoFocus
                   spellCheck={false}
-                  className="rounded-[4px] bg-[#F7F7F7] border-1 border-[#707070]"
+                  className="bg-[#F7F7F7] rounded-[4px] border-1 border-[#707070]"
                   required
                   {...field}
                 />
@@ -112,7 +71,6 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="password"
@@ -138,7 +96,7 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    className="h-full w-full rounded-[4px] border-none bg-transparent p-0 focus-visible:ring-transparent"
+                    className="h-full w-full border-none bg-transparent p-0 focus-visible:ring-transparent"
                     name={field.name}
                     onChange={(value) => value && field.onChange(value)}
                     ref={field.ref}
@@ -167,58 +125,8 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
             </FormItem>
           )}
         />
-
-        {shouldShowSelect && (
-          <FormField
-            control={form.control}
-            name="roles"
-            render={({ field }) => (
-              <FormItem className="relative mt-5">
-                <FormLabel htmlFor="roles" className="text-foreground block">
-                  Perfil
-                </FormLabel>
-
-                <FormControl>
-                  <Select
-                    onValueChange={(value) => field.onChange(value.split(","))}
-                    value={field.value.join(",")}
-                  >
-                    <SelectTrigger
-                      className="w-full rounded-[4px] border-1 border-[#707070] bg-[#F7F7F7]"
-                      id="roles"
-                    >
-                      <SelectValue />
-                    </SelectTrigger>
-
-                    <SelectContent className="absolute z-50 bg-white shadow-lg">
-                      {roles
-                        .filter(
-                          (role) =>
-                            role === ROLE.admin || role === ROLE.librarian
-                        )
-                        .map((role) => (
-                          <SelectItem
-                            key={role}
-                            value={role}
-                            className="cursor-pointer"
-                          >
-                            {role === ROLE.admin
-                              ? "Adminstrador"
-                              : "Bibliotecário"}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-
-                <FormMessage className="absolute text-red-500 bottom-[-18px] right-0 block text-xs" />
-              </FormItem>
-            )}
-          />
-        )}
-
         <Button
-          className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-8 rounded-[4px]"
+          className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-6 rounded-[4px]"
           disabled={form.formState.isSubmitting}
           type="submit"
         >
@@ -228,10 +136,9 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
             "Entrar"
           )}
         </Button>
-
         <div className="mb-2 text-center text-sm">
-          Já tem uma conta? {""}
-          <Link href="/login" className="text-[#007A7C]">
+          Não tem uma conta? {""}
+          <Link href="/" className="text-[#007A7C]">
             Clique aqui
           </Link>
         </div>
