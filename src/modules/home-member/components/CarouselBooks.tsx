@@ -24,7 +24,7 @@ interface CarouselBooksProps {
 
 export const CarouselBooks: React.FC<CarouselBooksProps> = ({ title, books }) => {
   return (
-    <section className="mt-16">
+    <section className="px-4 mt-16 max-w-[1400px] mx-auto">
       <h1 className="text-[20px] font-bold mb-6">{title}</h1>
 
       <Carousel className="w-full">

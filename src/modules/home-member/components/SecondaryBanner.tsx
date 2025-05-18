@@ -4,21 +4,21 @@ import { Button } from "@acervo/components/ui/button";
 
 export const SecondaryBanner = () => {
   return (
-    <section className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-gradient-to-r from-[#1AA1A3] to-[#007A7C] py-10 mt-40">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-y-8 md:gap-y-0 min-h-[400px] items-center px-6 sm:px-10 md:px-24">
-
-        {/* Coluna 1: título e subtítulo */}
-        <div className="text-white text-center md:text-left">
+    <section className="w-full bg-gradient-to-r from-[#1AA1A3] to-[#007A7C] py-10 mt-40">
+      <div className="w-full mx-auto max-w-[1200px] md:max-w-[1400px] grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-y-0 min-h-[400px] items-center px-6 sm:px-10 md:px-24 text-center lg:text-left">
+        {/* Título e texto */}
+        <div className="text-white flex flex-col items-center lg:items-start">
           <h1 className="text-3xl sm:text-4xl md:text-[48px] font-bold mb-2">
             Livro em Destaque
           </h1>
-          <p className="text-base sm:text-lg">
-            O Hobbit - J.R.R. Tolkien<br className="hidden sm:block" />
+          <p className="text-base sm:text-lg pt-[24px]">
+            O Hobbit - J.R.R. Tolkien
+            <br className="hidden sm:block" />
             Uma jornada mágica pela Terra
           </p>
         </div>
 
-        {/* Coluna 2: imagem */}
+        {/* Imagem */}
         <div className="flex justify-center">
           <img
             src="https://covers.openlibrary.org/b/id/6979861-L.jpg"
@@ -27,13 +27,16 @@ export const SecondaryBanner = () => {
           />
         </div>
 
-        {/* Coluna 3: botão */}
-        <div className="flex justify-center md:justify-end">
-          <Button variant="secondary" size="lg">
+        {/* Botão */}
+        <div className="flex justify-center lg:justify-end">
+          <Button
+            variant="secondary"
+            size="lg"
+            className="w-full max-w-[260px]"
+          >
             Clique Aqui
           </Button>
         </div>
-
       </div>
     </section>
   );

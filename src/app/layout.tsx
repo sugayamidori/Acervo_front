@@ -36,7 +36,7 @@ export default function RootLayout({
       >
         <ReactQueryClientProvider>
           <div className="relative flex min-h-screen flex-col">
-            <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1400px] flex-1w-full mx-auto px-4 sm:px-6 md:px-8 lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1400px] flex-1">{children}</div>
+            <div className="flex-1">{children}</div>
           </div>
         </ReactQueryClientProvider>
       </body>
