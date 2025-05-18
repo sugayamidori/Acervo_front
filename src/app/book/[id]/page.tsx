@@ -1,3 +1,3 @@
-import Book from "@acervo/modules/book-details/pages/index";
+import Book from "@acervo/modules/book-page/pages/index";
 
 export default Book;
