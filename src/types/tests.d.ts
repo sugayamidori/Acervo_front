@@ -9,3 +9,8 @@ export interface LucideIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number | string;
   color?: string;
 }
+
+export interface FormWithSubmitProps {
+  rules?: RegisterOptions;
+  description?: string;
+}
