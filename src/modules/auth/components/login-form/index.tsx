@@ -37,9 +37,15 @@ export const LoginForm = () => {
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  const onSubmit = async (data: loginFormInputsProps) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log(data);
+  };
+
   return (
     <Form {...form}>
-      <form className="w-full">
+      <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
         {" "}
         <FormField
           control={form.control}
