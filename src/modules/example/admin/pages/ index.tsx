@@ -1,15 +1,16 @@
 "use client"
 import { Header } from "@acervo/components/header";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@acervo/components/ui/table";
+// import {
+//   Table,
+//   TableBody,
+//   TableCaption,
+//   TableCell,
+//   TableFooter,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@acervo/components/ui/table";
+import { UserTable } from "@acervo/modules/example/components/UserTable";
 import { Book, User, BookOpen } from "lucide-react";
 import { DashboardCard } from "@acervo/modules/example/components/DashboardCard";
 import { Input } from "@acervo/components/ui/input";
@@ -116,41 +117,39 @@ const invoices = [
   
 ];
 
-export function TableDemo() {
-  return (
-    <div className="flex justify-center">
-    <Table className="w-full max-w-5xl">
-      <TableCaption>A list of your recent invoices.</TableCaption>
-      <TableHeader className="bg-[#F4F4F4]">
-        <TableRow>
-        <TableHead className="w-[100px] px-6 text-center">ID</TableHead>
-        <TableHead className="min-w-[150px] px-6 text-center">Nome</TableHead>
-        <TableHead className="min-w-[200px] px-6 text-center">Email</TableHead>
-        <TableHead className="min-w-[160px] px-6 text-center">Tipo Usuário</TableHead>
-        <TableHead className="min-w-[140px] px-6 text-center">Ações</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.ID}>
-            <TableCell className="px-6 text-center font-medium">{invoice.ID}</TableCell>
-          <TableCell className="px-6 text-center">{invoice.Nome}</TableCell>
-          <TableCell className="px-6 text-center">{invoice.Email}</TableCell>
-          <TableCell className="px-6 text-center">{invoice.TipoUsuario}</TableCell>
-          <TableCell className="px-6 text-center">{invoice.Ações}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-      {/* <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter> */}
-    </Table>
-    </div>
-  )
-}
+// export function TableDemo() {
+//   return (
+//     <div className="w-full flex justify-center">
+//   <div className="w-full max-w-screen-xl">
+//     <Table className="w-full">
+//       <TableCaption>Lista de usuários recentes.</TableCaption>
+//       <TableHeader className="bg-[#F4F4F4]">
+//         <TableRow>
+//           <TableHead className="w-[120px] px-8 text-center">ID</TableHead>
+//           <TableHead className="min-w-[200px] px-8 text-center">Nome</TableHead>
+//           <TableHead className="min-w-[250px] px-8 text-center">Email</TableHead>
+//           <TableHead className="min-w-[200px] px-8 text-center">Tipo Usuário</TableHead>
+//           <TableHead className="min-w-[180px] px-8 text-center">Ações</TableHead>
+//         </TableRow>
+//       </TableHeader>
+//       <TableBody>
+//         {invoices.map((invoice) => (
+//           <TableRow key={invoice.ID}>
+//             <TableCell className="px-8 text-center font-medium">{invoice.ID}</TableCell>
+//             <TableCell className="px-8 text-center">{invoice.Nome}</TableCell>
+//             <TableCell className="px-8 text-center">{invoice.Email}</TableCell>
+//             <TableCell className="px-8 text-center">{invoice.TipoUsuario}</TableCell>
+//             <TableCell className="px-8 text-center">{invoice.Ações}</TableCell>
+//           </TableRow>
+//         ))}
+//       </TableBody>
+//     </Table>
+//   </div>
+// </div>
+
+//   );
+// }
+
 const TelaAdmin = () => {
   const handleSelect = (tab: string) => {
     console.log("Aba selecionada:", tab);
@@ -174,7 +173,7 @@ const TelaAdmin = () => {
           </div>
         </div>
         <ToggleTabs options={["Usuários", "Empréstimos"]} onSelect={handleSelect} />
-        <TableDemo />
+        <UserTable invoices={invoices} />
       </main>
     </>
   );
