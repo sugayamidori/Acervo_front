@@ -22,6 +22,7 @@ import { Loader } from "@acervo/components/loader/index";
 
 import { loginAdminSchema } from "./schemas";
 import { loginFormInputsProps } from "./types";
+import { authLogin } from "@acervo/service/user";
 
 export const LoginForm = () => {
   const schema = loginAdminSchema();
@@ -38,14 +39,20 @@ export const LoginForm = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const onSubmit = async (data: loginFormInputsProps) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+  const handleFormLogin = async (data: loginFormInputsProps) => {
+    try {
+      const isSucess = await authLogin(data);
+      if (isSucess) {
+        console.log("Logou oieee");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Form {...form}>
-      <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="w-full" onSubmit={form.handleSubmit(handleFormLogin)}>
         {" "}
         <FormField
           control={form.control}
