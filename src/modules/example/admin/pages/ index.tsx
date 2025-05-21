@@ -1,27 +1,16 @@
 "use client"
 import { Header } from "@acervo/components/header";
-// import {
-//   Table,
-//   TableBody,
-//   TableCaption,
-//   TableCell,
-//   TableFooter,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@acervo/components/ui/table";
 import { UserTable } from "@acervo/modules/example/components/UserTable";
-import { Book, User, BookOpen } from "lucide-react";
+import { Book, User, BookOpen, Pen, Trash2} from "lucide-react";
 import { DashboardCard } from "@acervo/modules/example/components/DashboardCard";
-import { Input } from "@acervo/components/ui/input";
 import { EmailInput } from "@acervo/modules/example/components/EmailInput";
 import { ToggleTabs } from "@acervo/components/ui/ToggleTabs";
-import { useState } from "react";
 import { Button } from "@acervo/components/ui/button";
+import { useState } from "react";
 
 function Dashboard() {
   return (
-    <div className="flex gap-6 p-6 flex-wrap">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 w-full max-w-6xl mx-auto">
       <DashboardCard
         icon={<Book className="text-white" size={20} />}
         label="Livros cadastrados"
@@ -43,7 +32,7 @@ function Dashboard() {
     </div>
   );
 }
-const invoices = [
+const userInvoices = [
   {
     ID: "01",
     Nome: "Matheus",
@@ -116,44 +105,32 @@ const invoices = [
   }
   
 ];
-
-// export function TableDemo() {
-//   return (
-//     <div className="w-full flex justify-center">
-//   <div className="w-full max-w-screen-xl">
-//     <Table className="w-full">
-//       <TableCaption>Lista de usuários recentes.</TableCaption>
-//       <TableHeader className="bg-[#F4F4F4]">
-//         <TableRow>
-//           <TableHead className="w-[120px] px-8 text-center">ID</TableHead>
-//           <TableHead className="min-w-[200px] px-8 text-center">Nome</TableHead>
-//           <TableHead className="min-w-[250px] px-8 text-center">Email</TableHead>
-//           <TableHead className="min-w-[200px] px-8 text-center">Tipo Usuário</TableHead>
-//           <TableHead className="min-w-[180px] px-8 text-center">Ações</TableHead>
-//         </TableRow>
-//       </TableHeader>
-//       <TableBody>
-//         {invoices.map((invoice) => (
-//           <TableRow key={invoice.ID}>
-//             <TableCell className="px-8 text-center font-medium">{invoice.ID}</TableCell>
-//             <TableCell className="px-8 text-center">{invoice.Nome}</TableCell>
-//             <TableCell className="px-8 text-center">{invoice.Email}</TableCell>
-//             <TableCell className="px-8 text-center">{invoice.TipoUsuario}</TableCell>
-//             <TableCell className="px-8 text-center">{invoice.Ações}</TableCell>
-//           </TableRow>
-//         ))}
-//       </TableBody>
-//     </Table>
-//   </div>
-// </div>
-
-//   );
-// }
-
+const loanInvoices = [
+  {
+    ID: "101",
+    Livro: "1984",
+    Usuario: "Matheus",
+    Devolucao: "2025-06-01",
+    Atraso: "Não",
+    Multa: "R$ 0,00",
+    Ações: "Ver detalhes",
+  },
+  {
+    ID: "102",
+    Livro: "O Hobbit",
+    Usuario: "Ana Clara",
+    Devolucao: "2025-05-10",
+    Atraso: "Sim",
+    Multa: "R$ 10,00",
+    Ações: "Ver detalhes",
+  },
+];
 const TelaAdmin = () => {
+  const [selectedTab, setSelectedTab] = useState("Usuários");
+
   const handleSelect = (tab: string) => {
+    setSelectedTab(tab);
     console.log("Aba selecionada:", tab);
-    // Aqui você pode setar um state e renderizar componentes diferentes, por exemplo
   };
   return (
     <>
@@ -163,7 +140,7 @@ const TelaAdmin = () => {
         <Dashboard />
 
         <div className="w-full flex justify-center items-center h-10">
-          <div className="w-full max-w-sm">
+          <div className="w-full max-w-xl">
             <EmailInput />
           </div>
           <div>
@@ -173,7 +150,11 @@ const TelaAdmin = () => {
           </div>
         </div>
         <ToggleTabs options={["Usuários", "Empréstimos"]} onSelect={handleSelect} />
-        <UserTable invoices={invoices} />
+
+        <UserTable
+          type={selectedTab}
+          invoices={selectedTab === "Usuários" ? userInvoices : loanInvoices}
+        />
       </main>
     </>
   );

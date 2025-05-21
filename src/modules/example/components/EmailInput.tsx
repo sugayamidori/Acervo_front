@@ -6,7 +6,7 @@ export function EmailInput(props: React.ComponentProps<typeof Input>) {
     <Input
       type="email"
       placeholder="Digite seu email"
-      className="border-blue-500 focus-visible:ring-blue-300"
+      className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 w-full max-w-6xl"
       {...props}
     />
   )
