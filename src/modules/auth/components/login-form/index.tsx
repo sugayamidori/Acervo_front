@@ -19,6 +19,7 @@ import {
 } from "@acervo/components/ui/form";
 import { Input } from "@acervo/components/ui/input";
 import { Loader } from "@acervo/components/loader/index";
+import { toast } from "sonner";
 
 import { loginAdminSchema } from "./schemas";
 import { loginFormInputsProps } from "./types";
@@ -43,7 +44,15 @@ export const LoginForm = () => {
     try {
       const isSucess = await authLogin(data);
       if (isSucess) {
-        console.log("Logou oieee");
+        toast.success("Seja bem-vindo!", {
+          position: "bottom-right",
+          style: { backgroundColor: "white", color: "#000", border: "none" },
+        });
+      } else {
+        toast.error("Usuário ainda não cadastrado", {
+          position: "bottom-right",
+          style: { backgroundColor: "white", color: "#000", border: "none" },
+        });
       }
     } catch (error) {
       console.error(error);
