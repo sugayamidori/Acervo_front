@@ -38,7 +38,7 @@ export const registerAdminSchema = () => {
         message: "Máximo de 12 caracteres",
       })
       .trim(),
-    roles: z.array(z.enum(roles)),
+    roles: z.array(z.enum(roles)).optional(),
   });
   return schema;
 };

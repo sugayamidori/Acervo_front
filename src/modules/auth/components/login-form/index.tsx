@@ -23,7 +23,7 @@ import { toast } from "sonner";
 
 import { loginAdminSchema } from "./schemas";
 import { loginFormInputsProps } from "./types";
-import { authLogin } from "@acervo/service/user";
+import { authLogin } from "@acervo/service/auth";
 
 export const LoginForm = () => {
   const schema = loginAdminSchema();

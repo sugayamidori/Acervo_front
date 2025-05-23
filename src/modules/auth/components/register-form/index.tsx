@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Eye, EyeOff } from "lucide-react";
 
@@ -27,13 +29,24 @@ import {
   SelectItem,
   SelectContent,
 } from "@acervo/components/ui/select";
+import { toast } from "sonner";
 
-import { registerFormInputsProps, RegisterComponentProps } from "./types";
+import { registerFormInputsProps } from "./types";
 import { registerAdminSchema } from "./schemas";
+import { authRegisterAdmin, authRegisterMember } from "@acervo/service/auth";
 
-export const RegisterForm = ({ userType }: RegisterComponentProps) => {
+export const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const roles = Object.values(ROLE);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const userType = pathname.includes("/admin")
+    ? USER_TYPES.admin
+    : pathname.includes("/librarian")
+    ? USER_TYPES.librarian
+    : USER_TYPES.member;
+
   const shouldShowSelect =
     userType === USER_TYPES.admin || userType === USER_TYPES.librarian;
 
@@ -52,16 +65,37 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
     setShowPassword((prevState) => !prevState);
   };
 
+  const onSubmit = async (data: registerFormInputsProps) => {
+    let success = false;
+    if (userType === USER_TYPES.admin) {
+      success = await authRegisterAdmin(data);
+    } else if (userType === USER_TYPES.member) {
+      success = await authRegisterMember(data);
+    }
+
+    if (success) {
+      toast.success("Usuário cadastrado com sucesso!", {
+        position: "bottom-right",
+        style: { backgroundColor: "white", color: "#000", border: "none" },
+      });
+      return router.push("/login");
+    } else {
+      toast.error("Não foi possível cadastrar esse usuário", {
+        position: "bottom-right",
+        style: { backgroundColor: "white", color: "#000", border: "none" },
+      });
+    }
+  };
+
   return (
     <Form {...form}>
-      <form className="w-full">
+      <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="username"
           render={({ field, fieldState }) => (
             <FormItem>
               <FormLabel htmlFor="username">Nome</FormLabel>
-
               <FormControl
                 className={fieldState.error && "focus-visible:ring-rose-600"}
               >
@@ -76,12 +110,10 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                   {...field}
                 />
               </FormControl>
-
               <FormMessage className="absolute text-red-500 bottom-[-18px] right-0 block text-xs" />
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="email"
@@ -90,7 +122,6 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
               <FormLabel htmlFor="email" className="mt-5">
                 E-mail
               </FormLabel>
-
               <FormControl
                 className={fieldState.error && "focus-visible:ring-rose-600"}
               >
@@ -107,12 +138,10 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                   {...field}
                 />
               </FormControl>
-
               <FormMessage className="absolute text-red-500 bottom-[-18px] right-0 block text-xs" />
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="password"
@@ -121,19 +150,18 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
               <FormLabel htmlFor="password" className="text-foreground mt-5">
                 Senha
               </FormLabel>
-
               <FormControl>
                 <div
                   className={`bg-[#F7F7F7] flex h-10 w-full items-center 
-                          justify-between gap-2 rounded-[4px] border-1 border-[#707070] 
-                          px-3 py-2 
-                          text-center focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 
-                          ${
-                            fieldState.error
-                              ? `focus-within:ring-rose-600`
-                              : `focus-within:ring-ring`
-                          }
-                        `}
+                  justify-between gap-2 rounded-[4px] border-1 border-[#707070] 
+                  px-3 py-2 
+                  text-center focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 
+                  ${
+                    fieldState.error
+                      ? `focus-within:ring-rose-600`
+                      : `focus-within:ring-ring`
+                  }
+                `}
                 >
                   <Input
                     id="password"
@@ -146,7 +174,6 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                     spellCheck={false}
                     required
                   />
-
                   <span className="cursor-pointer leading-[0]">
                     <button
                       onClick={handleTogglePasswordVisibility}
@@ -162,12 +189,10 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                   </span>
                 </div>
               </FormControl>
-
               <FormMessage className="absolute text-red-500 bottom-[-18px] right-0 block text-xs" />
             </FormItem>
           )}
         />
-
         {shouldShowSelect && (
           <FormField
             control={form.control}
@@ -177,11 +202,10 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                 <FormLabel htmlFor="roles" className="text-foreground block">
                   Perfil
                 </FormLabel>
-
                 <FormControl>
                   <Select
-                    onValueChange={(value) => field.onChange(value.split(","))}
-                    value={field.value.join(",")}
+                    onValueChange={(value) => field.onChange([value])}
+                    value={field.value?.[0] || ""}
                   >
                     <SelectTrigger
                       className="w-full rounded-[4px] border-1 border-[#707070] bg-[#F7F7F7]"
@@ -189,7 +213,6 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                     >
                       <SelectValue />
                     </SelectTrigger>
-
                     <SelectContent className="absolute z-50 bg-white shadow-lg">
                       {roles
                         .filter(
@@ -210,13 +233,11 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
                     </SelectContent>
                   </Select>
                 </FormControl>
-
                 <FormMessage className="absolute text-red-500 bottom-[-18px] right-0 block text-xs" />
               </FormItem>
             )}
           />
         )}
-
         <Button
           className="w-full h-10 cursor-pointer bg-[#007A7C] text-white my-8 rounded-[4px]"
           disabled={form.formState.isSubmitting}
@@ -228,7 +249,6 @@ export const RegisterForm = ({ userType }: RegisterComponentProps) => {
             "Entrar"
           )}
         </Button>
-
         <div className="mb-2 text-center text-sm">
           Já tem uma conta? {""}
           <Link href="/login" className="text-[#007A7C]">
