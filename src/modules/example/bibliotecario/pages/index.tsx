@@ -1,6 +1,6 @@
 "use client"
 import { Header } from "@acervo/components/header";
-import { UserTableAdm } from "@acervo/modules/example/components/UserTableAdm";
+import { UserTableBibli } from "../../components/UserTableBibli";
 import { Book, User, BookOpen, Pen, Trash2} from "lucide-react";
 import { DashboardCard } from "@acervo/modules/example/components/DashboardCard";
 import { EmailInput } from "@acervo/modules/example/components/EmailInput";
@@ -125,7 +125,7 @@ const loanInvoices = [
     Ações: "Ver detalhes",
   },
 ];
-const TelaAdmin = () => {
+const TelaBibli = () => {
   const [selectedTab, setSelectedTab] = useState("Usuários");
 
   const handleSelect = (tab: string) => {
@@ -136,7 +136,7 @@ const TelaAdmin = () => {
     <>
       <Header />
       <main className="pt-24 flex flex-col items-center gap-6">
-        <h1 className="text-3xl font-bold">Painel do Administrador</h1>
+        <h1 className="text-3xl font-bold">Painel do Bibliotecário</h1>
         <Dashboard />
 
         <div className="w-full flex justify-center items-center h-10">
@@ -151,7 +151,7 @@ const TelaAdmin = () => {
         </div>
         <ToggleTabs options={["Usuários", "Empréstimos"]} onSelect={handleSelect} />
 
-        <UserTableAdm
+        <UserTableBibli
           type={selectedTab}
           invoices={selectedTab === "Usuários" ? userInvoices : loanInvoices}
         />
@@ -160,4 +160,4 @@ const TelaAdmin = () => {
   );
 };
 
-export default TelaAdmin;
+export default TelaBibli;

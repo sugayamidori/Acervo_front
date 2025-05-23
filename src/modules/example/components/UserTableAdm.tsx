@@ -1,12 +1,12 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@acervo/components/ui/table";
-import { Pen, Trash2 } from "lucide-react";
+import { Pen, Trash2, Repeat } from "lucide-react";
 
 interface UserTableProps {
   invoices: any[];
   type: "Usuários" | "Empréstimos";
 }
 
-export function UserTable({ invoices, type }: UserTableProps) {
+export function UserTableAdm({ invoices, type }: UserTableProps) {
   return (
     <div className="w-full flex justify-center">
       <div className="w-full max-w-screen-xl">
@@ -59,11 +59,21 @@ export function UserTable({ invoices, type }: UserTableProps) {
                   </>
                 )}
                 <TableCell className="px-8 text-center">
-  <div className="flex justify-center gap-3">
-    <Pen className="text-blue-600 cursor-pointer hover:scale-105 transition" size={18} />
-    <Trash2 className="text-red-600 cursor-pointer hover:scale-105 transition" size={18} />
+  <div className="flex justify-center gap-3 items-center">
+    {type === "Usuários" ? (
+      <>
+        <Pen className="text-blue-600 cursor-pointer hover:scale-105 transition" size={18} />
+        <Trash2 className="text-red-600 cursor-pointer hover:scale-105 transition" size={18} />
+      </>
+    ) : (
+      <button className="flex items-center gap-1 text-teal-700 font-medium hover:underline">
+        <Repeat size={18} />
+        Devolver
+      </button>
+    )}
   </div>
 </TableCell>
+
 
               </TableRow>
             ))}
