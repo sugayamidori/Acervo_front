@@ -37,7 +37,7 @@ export const authRegisterAdmin = async (
 ) => {
   const token = getCookie("access_token", context);
 
-  const registerRequestMember = {
+  const registerAdminOrLibrarian = {
     login: username,
     email,
     senha: password,
@@ -52,7 +52,7 @@ export const authRegisterAdmin = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(registerRequestMember),
+      body: JSON.stringify(registerAdminOrLibrarian),
     },
   });
 

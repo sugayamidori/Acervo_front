@@ -1,6 +1,6 @@
 import { setCookie } from "cookies-next";
 
-import { COOKIE_TOKEN } from "@acervo/constants/auth";
+import { COOKIE_TOKEN } from "@acervo/constants/cookies";
 import { LoginAuthReponse, SetCookiesLoginProps } from "@acervo/types/auth";
 
 export const setCookiesLogin = async ({ response }: SetCookiesLoginProps) => {
