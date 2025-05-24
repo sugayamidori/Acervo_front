@@ -7,6 +7,9 @@ import { EmailInput } from "@acervo/modules/example/components/EmailInput";
 import { ToggleTabs } from "@acervo/components/ui/ToggleTabs";
 import { Button } from "@acervo/components/ui/button";
 import { useState } from "react";
+import { TesteUsuarios } from "../../../../../TesteAPI/TesteUsuaario";
+import { useUsuarios } from "../../../../../TesteAPI/UseUsuarios";
+
 
 function Dashboard() {
   return (
@@ -127,6 +130,17 @@ const loanInvoices = [
 ];
 const TelaBibli = () => {
   const [selectedTab, setSelectedTab] = useState("Usuários");
+  const [mostrar, setMostrar] = useState(false);
+  const { usuarios, erro, carregando } = useUsuarios(selectedTab === "Usuários");
+
+  const dadosUsuarios = usuarios.map((u: any, i: number) => ({
+    ID: `${i + 1}`,
+    Nome: u.nome || u.login, // ou outro campo
+    Email: u.email,
+    TipoUsuario: u.roles?.[0] || "Desconhecido",
+    Ações: "Editar",
+  }));
+
 
   const handleSelect = (tab: string) => {
     setSelectedTab(tab);
@@ -149,12 +163,17 @@ const TelaBibli = () => {
       </Button>
           </div>
         </div>
-        <ToggleTabs options={["Usuários", "Empréstimos"]} onSelect={handleSelect} />
-
-        <UserTableBibli
-          type={selectedTab}
-          invoices={selectedTab === "Usuários" ? userInvoices : loanInvoices}
-        />
+        <ToggleTabs options={["Usuários", "Empréstimos"]} onSelect={setSelectedTab} />
+        
+        {carregando && <p>Carregando dados...</p>}
+        {erro && <p className="text-red-500">{erro}</p>}
+        
+        {!carregando && (
+          <UserTableBibli
+            type={selectedTab}
+            invoices={selectedTab === "Usuários" ? dadosUsuarios : dadosEmprestimos}
+          />
+        )}
       </main>
     </>
   );
