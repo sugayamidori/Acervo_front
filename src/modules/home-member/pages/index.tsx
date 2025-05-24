@@ -1,3 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { getLivros } from "@acervo/service/livros";
+import { Livro } from "@acervo/types/livro";
+
 import { Header } from "@acervo/components/header";
 import { MainBanner } from "@acervo/modules/home-member/components/MainBanner";
 import { CarouselBooks } from "@acervo/modules/home-member/components/CarouselBooks";
@@ -6,13 +12,28 @@ import { SecondaryBanner } from "@acervo/modules/home-member/components/Secondar
 import Footer from "@acervo/components/footer";
 
 const IndexPage = () => {
+
+  const [recentBooks, setRecentBooks] = useState<Livro[]>([]);
+  const [popularBooks, setPopularBooks] = useState<Livro[]>([]);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      const data = await getLivros();
+
+      setRecentBooks(data.slice(0, 5));
+      setPopularBooks(data.slice(6, 12));
+    };
+
+    fetchBooks();
+  }, []);
+
   return (
     <div className="pt-20">
       <Header />
       <MainBanner />
       <div className="w-full mx-auto xl:max-w-[1200px] 2xl:max-w-[1400px] px-4 sm:px-6 md:px-8">
-        <CarouselBooks title="Adicionados recentemente" books={mockData} />
-        <CarouselBooks title="Mais populares" books={mockData} />
+        <CarouselBooks title="Adicionados recentemente" livros={recentBooks} />
+        <CarouselBooks title="Mais populares" livros={popularBooks} />
       </div>
       <SecondaryBanner />
       <section className="my-24 px-4 py-12 text-center max-w-3xl mx-auto">
