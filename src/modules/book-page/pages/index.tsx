@@ -1,20 +1,20 @@
 import { BookDetails } from "@acervo/modules/book-page/components/BookDetails";
-import { mockData } from "@acervo/modules/home-member/data/mockBooks";
+import { getLivroPorId } from "@acervo/service/livros";
 
 interface Params {
   params: { id: string };
 }
 
-export default function BookPage({ params }: Params) {
-  const book = mockData.find((b) => String(b.id) === params.id);
+export default async function BookPage({ params }: Params) {
+  try {
+    const livro = await getLivroPorId(params.id);
 
-  if (!book) {
+    return <BookDetails book={livro} />;
+  } catch {
     return (
-      <div className="text-center p-20 text-xl">
+      <div className="text-center p-20 text-xl text-red-600">
         Livro não encontrado.
       </div>
     );
   }
-
-  return <BookDetails book={book} />;
 }

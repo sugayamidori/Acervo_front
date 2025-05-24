@@ -6,6 +6,8 @@ import { Inter } from "next/font/google";
 
 import { cn } from "@acervo/lib/utils";
 import { ReactQueryClientProvider } from "@acervo/contexts/react-query";
+import { Header } from "@acervo/components/header";
+import Footer from "@acervo/components/footer";
 
 const mulish = Inter({ subsets: ["latin"] });
 
@@ -36,7 +38,9 @@ export default function RootLayout({
       >
         <ReactQueryClientProvider>
           <div className="relative flex min-h-screen flex-col">
+            <Header />
             <div className="flex-1">{children}</div>
+            <Footer />
           </div>
         </ReactQueryClientProvider>
       </body>
