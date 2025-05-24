@@ -19,9 +19,11 @@ import {
 } from "@acervo/components/ui/form";
 import { Input } from "@acervo/components/ui/input";
 import { Loader } from "@acervo/components/loader/index";
+import { toast } from "sonner";
 
 import { loginAdminSchema } from "./schemas";
 import { loginFormInputsProps } from "./types";
+import { authLogin } from "@acervo/service/auth";
 
 export const LoginForm = () => {
   const schema = loginAdminSchema();
@@ -38,14 +40,28 @@ export const LoginForm = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const onSubmit = async (data: loginFormInputsProps) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+  const handleFormLogin = async (data: loginFormInputsProps) => {
+    try {
+      const isSucess = await authLogin(data);
+      if (isSucess) {
+        toast.success("Seja bem-vindo!", {
+          position: "bottom-right",
+          style: { backgroundColor: "white", color: "#000", border: "none" },
+        });
+      } else {
+        toast.error("Usuário ainda não cadastrado", {
+          position: "bottom-right",
+          style: { backgroundColor: "white", color: "#000", border: "none" },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Form {...form}>
-      <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="w-full" onSubmit={form.handleSubmit(handleFormLogin)}>
         {" "}
         <FormField
           control={form.control}

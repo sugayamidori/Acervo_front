@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
 import { cn } from "@acervo/lib/utils";
+import { Toaster } from "@acervo/components/ui/sonner";
 import { ReactQueryClientProvider } from "@acervo/contexts/react-query";
 
 const mulish = Inter({ subsets: ["latin"] });
@@ -39,6 +40,7 @@ export default function RootLayout({
             <div className="flex-1">{children}</div>
           </div>
         </ReactQueryClientProvider>
+        <Toaster />
       </body>
     </html>
   );
