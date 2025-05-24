@@ -9,15 +9,17 @@ jest.mock("next-themes", () => ({
 }));
 
 jest.mock("sonner", () => ({
-  Toaster: jest.fn(({ theme, className, style, ...rest }) => (
-    <div
-      data-testid="sonner-toaster"
-      data-theme={theme}
-      className={className}
-      style={style}
-      {...rest}
-    />
-  )),
+  Toaster: jest.fn((propsReceivedBySonner) => {
+    const { theme, className, style } = propsReceivedBySonner;
+    return (
+      <div
+        data-testid="sonner-toaster"
+        data-theme={theme}
+        className={className}
+        style={style}
+      />
+    );
+  }),
 }));
 describe("Toaster Component", () => {
   const mockUseTheme = useTheme as jest.Mock;
@@ -100,11 +102,9 @@ describe("Toaster Component", () => {
       ...customProps,
     });
 
-    const sonnerElement = screen.getByTestId("sonner-toaster");
-    expect(sonnerElement).toHaveAttribute("position", "top-center");
-
     expect(sonnerProps.richColors).toBe(true);
     expect(sonnerProps.closeButton).toBe(true);
+    expect(sonnerProps.position).toBe("top-center");
   });
 
   test('should use the "system" theme if useTheme returns an empty object', () => {
