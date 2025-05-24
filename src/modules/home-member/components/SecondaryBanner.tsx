@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import { Livro } from "@acervo/types/livro";
 import { getLivros } from "@acervo/service/livros";
 import { Button } from "@acervo/components/ui/button";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export const SecondaryBanner = () => {
   const [livroDestaque, setLivroDestaque] = useState<Livro | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchLivro = async () => {
@@ -25,7 +28,12 @@ export const SecondaryBanner = () => {
   if (!livroDestaque) return null;
 
   return (
-    <section className="w-full bg-gradient-to-r from-[#1AA1A3] to-[#007A7C] py-10 mt-40">
+    <section className="relative w-full bg-gradient-to-r from-[#007A7C] to-[#004D4E] py-10 mt-40">
+      <img
+        src="/images/dec.svg"
+        alt="Decoração"
+        className="absolute top-[40px] left-[40px] w-16 h-16 pointer-events-none select-none hidden md:block"
+      />
       <div className="w-full mx-auto max-w-[1200px] md:max-w-[1400px] grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-y-0 min-h-[400px] items-center px-6 sm:px-10 md:px-24 text-center lg:text-left">
         {/* Título e texto */}
         <div className="text-white flex flex-col items-center lg:items-start">
@@ -57,7 +65,8 @@ export const SecondaryBanner = () => {
           <Button
             variant="secondary"
             size="lg"
-            className="w-full max-w-[260px]"
+            className="w-full max-w-[260px] cursor-pointer"
+            onClick={() => router.push(`/book/${livroDestaque.id}`)}
           >
             Clique Aqui
           </Button>
