@@ -8,7 +8,7 @@ export const setCookieLogin = async ({ response }: SetCookiesLoginProps) => {
 
   setCookie(COOKIE_TOKEN, access_token, {
     path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 90 * 60,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
   });
