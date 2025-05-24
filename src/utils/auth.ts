@@ -1,4 +1,4 @@
-import { deleteCookie, setCookie } from "cookies-next";
+import { setCookie, deleteCookie } from "cookies-next";
 
 import { COOKIE_TOKEN } from "@acervo/constants/cookies";
 import { LoginAuthReponse, SetCookiesLoginProps } from "@acervo/types/auth";

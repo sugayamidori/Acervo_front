@@ -2,7 +2,7 @@ import { fetchAPI } from ".";
 import { getCookie } from "cookies-next";
 import { GetServerSidePropsContext } from "next";
 
-import { setCookiesLogin } from "@acervo/utils/auth";
+import { setCookieLogin } from "@acervo/utils/auth";
 import { loginFormInputsProps } from "@acervo/modules/auth/components/login-form/types";
 import { registerFormInputsProps } from "@acervo/modules/auth/components/register-form/types";
 
@@ -80,7 +80,7 @@ export const authLogin = async ({
   });
 
   if (response.status === 200) {
-    await setCookiesLogin({ response });
+    await setCookieLogin({ response });
     return true;
   }
   return false;
