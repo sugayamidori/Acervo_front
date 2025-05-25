@@ -100,7 +100,7 @@ describe("RegisterForm Component", () => {
     mockedUsePathname.mockClear();
   });
 
-  it("should render common fields correctly", () => {
+  test("should render common fields correctly", () => {
     mockedUsePathname.mockReturnValue("/register/member");
     render(<RegisterForm />);
     expect(screen.getByLabelText(/nome/i)).toBeInTheDocument();
@@ -113,13 +113,13 @@ describe("RegisterForm Component", () => {
     );
   });
 
-  it("should NOT render role select for member registration path", () => {
+  test("should NOT render role select for member registration path", () => {
     mockedUsePathname.mockReturnValue("/register");
     render(<RegisterForm />);
     expect(screen.queryByLabelText(/perfil/i)).not.toBeInTheDocument();
   });
 
-  it("should render role select for admin path and list options", async () => {
+  test("should render role select for admin path and list options", async () => {
     mockedUsePathname.mockReturnValue("/admin/register");
     render(<RegisterForm />);
     expect(screen.getByLabelText(/perfil/i)).toBeInTheDocument();
@@ -128,7 +128,7 @@ describe("RegisterForm Component", () => {
     expect(await screen.findByText("Bibliotecário")).toBeInTheDocument();
   });
 
-  it("should call authRegisterMember on submit for member path and show success", async () => {
+  test("should call authRegisterMember on submit for member path and show success", async () => {
     mockedUsePathname.mockReturnValue("/register");
     mockedAuthRegisterMember.mockResolvedValue(true);
     render(<RegisterForm />);
@@ -148,7 +148,7 @@ describe("RegisterForm Component", () => {
     await waitFor(() => expect(mockRouterPush).toHaveBeenCalledWith("/login"));
   });
 
-  it("should show error toast if authRegisterMember fails", async () => {
+  test("should show error toast if authRegisterMember fails", async () => {
     mockedUsePathname.mockReturnValue("/register");
     mockedAuthRegisterMember.mockResolvedValue(false);
     render(<RegisterForm />);
@@ -164,7 +164,7 @@ describe("RegisterForm Component", () => {
     expect(mockRouterPush).not.toHaveBeenCalled();
   });
 
-  it("should show error toast if authRegisterAdmin fails", async () => {
+  test("should show error toast if authRegisterAdmin fails", async () => {
     mockedUsePathname.mockReturnValue("/admin/register");
     mockedAuthRegisterAdmin.mockResolvedValue(false);
     render(<RegisterForm />);
@@ -176,7 +176,7 @@ describe("RegisterForm Component", () => {
     expect(mockRouterPush).not.toHaveBeenCalled();
   });
 
-  it("should show error toast and not call specific auth function for librarian path (as per current logic)", async () => {
+  test("should show error toast and not call specific auth function for librarian path (as per current logic)", async () => {
     mockedUsePathname.mockReturnValue("/librarian/register");
     render(<RegisterForm />);
     await fillCommonFields();
@@ -195,7 +195,7 @@ describe("RegisterForm Component", () => {
     expect(mockRouterPush).not.toHaveBeenCalled();
   });
 
-  it("should show loader when form is submitting", async () => {
+  test("should show loader when form is submitting", async () => {
     mockedUsePathname.mockReturnValue("/register");
     mockedAuthRegisterMember.mockImplementation(
       () => new Promise((resolve) => setTimeout(() => resolve(true), 100))

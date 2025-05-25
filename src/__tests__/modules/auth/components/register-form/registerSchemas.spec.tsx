@@ -11,12 +11,12 @@ describe("registerAdminSchema", () => {
     roles: [ROLE.admin],
   };
 
-  it("should validate correct data successfully", () => {
+  test("should validate correct data successfully", () => {
     const result = schema.safeParse(validData);
     expect(result.success).toBe(true);
   });
 
-  it("should allow optional roles to be undefined or empty array", () => {
+  test("should allow optional roles to be undefined or empty array", () => {
     expect(schema.safeParse({ ...validData, roles: undefined }).success).toBe(
       true
     );
@@ -24,7 +24,7 @@ describe("registerAdminSchema", () => {
   });
 
   describe("username validation", () => {
-    it("should fail if username is empty", () => {
+    test("should fail if username is empty", () => {
       const result = schema.safeParse({ ...validData, username: "" });
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -32,7 +32,7 @@ describe("registerAdminSchema", () => {
       }
     });
 
-    it("should use required_error if username key is missing (Zod default)", () => {
+    test("should use required_error if username key is missing (Zod default)", () => {
       const dataWithoutUsername = {
         email: validData.email,
         password: validData.password,
@@ -44,7 +44,7 @@ describe("registerAdminSchema", () => {
       }
     });
 
-    it("should fail if username exceeds max length", () => {
+    test("should fail if username exceeds max length", () => {
       const result = schema.safeParse({
         ...validData,
         username: "a".repeat(129),
@@ -57,7 +57,7 @@ describe("registerAdminSchema", () => {
   });
 
   describe("email validation", () => {
-    it("should fail if email is empty", () => {
+    test("should fail if email is empty", () => {
       const result = schema.safeParse({ ...validData, email: "" });
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -65,7 +65,7 @@ describe("registerAdminSchema", () => {
       }
     });
 
-    it("should fail if email is not a valid email format", () => {
+    test("should fail if email is not a valid email format", () => {
       const result = schema.safeParse({ ...validData, email: "invalidemail" });
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -75,7 +75,7 @@ describe("registerAdminSchema", () => {
   });
 
   describe("password validation", () => {
-    it("should fail if password is empty", () => {
+    test("should fail if password is empty", () => {
       const result = schema.safeParse({ ...validData, password: "" });
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -83,7 +83,7 @@ describe("registerAdminSchema", () => {
       }
     });
 
-    it("should fail if password is too short", () => {
+    test("should fail if password is too short", () => {
       const result = schema.safeParse({ ...validData, password: "123" });
       expect(result.success).toBe(false);
       if (!result.success) {
@@ -91,7 +91,7 @@ describe("registerAdminSchema", () => {
       }
     });
 
-    it("should fail if password is too long", () => {
+    test("should fail if password is too long", () => {
       const result = schema.safeParse({
         ...validData,
         password: "a".repeat(13),
@@ -104,7 +104,7 @@ describe("registerAdminSchema", () => {
   });
 
   describe("roles validation", () => {
-    it("should fail if roles contains an invalid role string", () => {
+    test("should fail if roles contains an invalid role string", () => {
       const result = schema.safeParse({
         ...validData,
         roles: ["ROLE_INVALID"],

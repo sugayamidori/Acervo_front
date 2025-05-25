@@ -23,7 +23,7 @@ jest.mock("@acervo/constants/index", () => ({
 }));
 
 describe("Register Page", () => {
-  it("should render the logo image correctly", () => {
+  test("should render the logo image correctly", () => {
     render(<Register />);
     const image = screen.getByRole("img", {
       name: /mock acervo digital title/i,
@@ -34,14 +34,14 @@ describe("Register Page", () => {
     expect(image).toHaveAttribute("height", "45");
   });
 
-  it("should render the main heading", () => {
+  test("should render the main heading", () => {
     render(<Register />);
     expect(
       screen.getByRole("heading", { name: /crie sua conta/i, level: 1 })
     ).toBeInTheDocument();
   });
 
-  it("should render the RegisterForm component", () => {
+  test("should render the RegisterForm component", () => {
     render(<Register />);
     expect(screen.getByTestId("register-form-mock")).toBeInTheDocument();
   });
