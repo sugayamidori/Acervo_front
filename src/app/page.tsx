@@ -2,6 +2,8 @@
 
 // export default Example;
 
-import Register from "@acervo/modules/auth/pages/register";
+//import Register from "@acervo/modules/auth/pages/register";
 
-export default Register;
+import Home from "@acervo/modules/home-member/pages"
+
+export default Home;
