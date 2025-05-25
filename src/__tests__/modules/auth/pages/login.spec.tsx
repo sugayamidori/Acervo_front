@@ -10,9 +10,7 @@ jest.mock("@acervo/modules/auth/components/login-form", () => ({
 jest.mock("next/image", () => ({
   __esModule: true,
   default: (props: ImageProps) => {
-    // 2. Use ImageProps para tipar as props
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} />; // 3. O restante do mock permanece o mesmo
+    return <img {...props} />;
   },
 }));
 
