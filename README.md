@@ -84,24 +84,22 @@ O projeto utiliza Jest para testes.
     ```
 
 ## 📂 Estrutura
-
 ```
-📂 public/images    # Contém as imagens do projeto
+📂 public/images             # Contém as imagens do projeto
 ├──
 📂 src
- ├── 📂 __tests__	#Contém todos os testes unitários da aplicação
- ├── 📂 app		#Estrutura de rotas e layout da aplicação
- ├── 📂 components  # Components globais do projeto
- ├── 📂 constants   # Define constantes globais. ex.: imagens
- ├── 📂 contexts   	# Armazena os contextos da aplicação (React Context API)
- ├── 📂 lib  	    # Contém funções e utilitários auxiliares da aplicação
- ├── 📂 modules     # Contém os components e a página
- ├── 📂 services    # Estrutura e chamada da API
- ├── 📂 types       # Tipagem global
- ├── 📂 utils       # Contém funções utilitárias reutilizáveis
-🔑 .env.local       # Contém as variáveis de ambiente do projeto
+ ├── 📂 __tests__           # Contém todos os testes unitários da aplicação
+ ├── 📂 app                 # Estrutura de rotas e layout da aplicação
+ ├── 📂 components          # Components globais do projeto
+ ├── 📂 constants           # Define constantes globais. ex.: imagens
+ ├── 📂 contexts            # Armazena os contextos da aplicação (React Context API)
+ ├── 📂 lib                 # Contém funções e utilitários auxiliares da aplicação
+ ├── 📂 modules             # Contém os components e a página
+ ├── 📂 services            # Estrutura e chamada da API
+ ├── 📂 types               # Tipagem global
+ ├── 📂 utils               # Contém funções utilitárias reutilizáveis
+🔑 .env.local               # Contém as variáveis de ambiente do projeto
 ```
-
 ## 🧑‍💻Tecnologias
 
 - [Shadcn/ui](https://ui.shadcn.com/)
