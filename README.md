@@ -47,7 +47,7 @@ Após a instalação, é necessário configurar as variáveis de ambiente:
 2.  Adicione as seguintes variáveis ao arquivo:
 
     ```env
-    NEXT_PUBLIC_API_URL="[http://15.228.247.160:8080](http://15.228.247.160:8080)"
+    NEXT_PUBLIC_API_URL="http://15.228.247.160:8080"
     NODE_ENV=development
     ```
 
@@ -62,7 +62,7 @@ Para iniciar o servidor de desenvolvimento:
     ```bash
     npm run dev
     ```
-    Abra [http://localhost:3000](http://localhost:3000) (ou a porta indicada no seu terminal) no seu navegador para ver a aplicação.
+    Abra http://localhost:3000 (ou a porta indicada no seu terminal) no seu navegador para ver a aplicação.
 
 ## ✅ Testes
 
