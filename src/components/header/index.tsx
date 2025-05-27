@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Search, Menu, X } from "lucide-react";
 
 import { Logo } from "@acervo/constants/index";
@@ -10,11 +11,26 @@ import { Input } from "@acervo/components/ui/input";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
+  const handleSearch = () => {
+    const trimmedSearchTerm = searchTerm.trim();
+    if (trimmedSearchTerm !== "") {
+      router.push(`/search?query=${encodeURIComponent(trimmedSearchTerm)}`);
+      setSearchTerm("");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 shadow-md bg-white">
       <div className="w-full max-w-[1400px] mx-auto px-4 flex flex-wrap md:flex-nowrap h-auto md:h-[5em] items-center justify-between gap-4 py-2 relative">
-
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 order-1">
           <Image
@@ -42,9 +58,14 @@ export const Header = () => {
             type="text"
             className="h-full w-full text-black pl-4 border-none rounded-l-4xl rounded-r-none outline-none focus:ring-0 focus:border-transparent border-2 focus-visible:ring-0 focus-visible:border-transparent"
             placeholder="Busque por um livro"
-            onKeyDown={(e) => e.key === "Enter"}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-          <span className="p-2 mr-2 rounded-full transition-all duration-200 hover:bg-[#DEDEDE] cursor-pointer">
+          <span
+            className="p-2 mr-2 rounded-full transition-all duration-200 hover:bg-[#DEDEDE] cursor-pointer"
+            onClick={handleSearch}
+          >
             <Search size={18} className="text-[#007A7C]" />
           </span>
         </div>
