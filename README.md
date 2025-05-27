@@ -47,7 +47,7 @@ Após a instalação, é necessário configurar as variáveis de ambiente:
 2.  Adicione as seguintes variáveis ao arquivo:
 
     ```env
-    NEXT_PUBLIC_API_URL="http://15.228.247.160:8080"
+    NEXT_PUBLIC_API_URL="http://localhost:8080"
     NODE_ENV=development
     ```
 
@@ -84,6 +84,7 @@ O projeto utiliza Jest para testes.
     ```
 
 ## 📂 Estrutura
+
 ```
 📂 public/images             # Contém as imagens do projeto
 ├──
@@ -100,6 +101,7 @@ O projeto utiliza Jest para testes.
  ├── 📂 utils               # Contém funções utilitárias reutilizáveis
 🔑 .env.local               # Contém as variáveis de ambiente do projeto
 ```
+
 ## 🧑‍💻Tecnologias
 
 - [Shadcn/ui](https://ui.shadcn.com/)
