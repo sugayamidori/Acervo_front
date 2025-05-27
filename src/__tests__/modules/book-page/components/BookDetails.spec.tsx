@@ -1,8 +1,17 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { BookDetails } from "@acervo/modules/book-page/components/BookDetails";
 import { Livro, StatusLivro } from "@acervo/types/livro";
 import { format, addDays } from "date-fns";
+import { LoanDialog } from "@acervo/modules/book-page/components/LoanDialog";
+import { getBase64ImageSrc } from "@acervo/utils/formatter";
+
+jest.mock("@acervo/utils/formatter", () => ({
+  getBase64ImageSrc: jest.fn(
+    (imageString: string, imageType: string) => `data:${imageType};base64,${imageString}`
+  ),
+}));
 
 jest.mock("@acervo/modules/book-page/components/LoanDialog", () => ({
   LoanDialog: jest.fn(({ isOpen, onOpenChange, formattedReturnDate }) =>
@@ -15,6 +24,9 @@ jest.mock("@acervo/modules/book-page/components/LoanDialog", () => ({
     ) : null
   ),
 }));
+
+const MockedLoanDialog = LoanDialog as jest.Mock;
+const MockedGetBase64ImageSrc = getBase64ImageSrc as jest.Mock;
 
 const mockBookDisponivel: Livro = {
   id: "1",
@@ -64,23 +76,21 @@ const mockBookSumarioVazioString: Livro = {
   imagem: "http://example.com/circe.jpg",
 };
 
-const MOCK_TODAY = new Date(2024, 4, 24);
+const MOCK_TODAY = new Date(2024, 4, 24); // Maio é mês 4 (0-indexed)
 
 describe("BookDetails Component", () => {
-  let MockedLoanDialog: jest.Mock;
+  let consoleErrorSpy: jest.SpyInstance;
 
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
     jest.setSystemTime(MOCK_TODAY);
-
-    MockedLoanDialog = jest.requireMock(
-      "@acervo/modules/book-page/components/LoanDialog"
-    ).LoanDialog;
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
     jest.useRealTimers();
+    consoleErrorSpy.mockRestore();
   });
 
   it("📚 should render all book details correctly for an available book", () => {
@@ -94,7 +104,8 @@ describe("BookDetails Component", () => {
     expect(screen.getByText(mockBookDisponivel.isbn)).toBeInTheDocument();
 
     const image = screen.getByRole("img", { name: mockBookDisponivel.titulo });
-    expect(image).toHaveAttribute("src", mockBookDisponivel.imagem);
+    expect(MockedGetBase64ImageSrc).toHaveBeenCalledWith(mockBookDisponivel.imagem, "image/png");
+    expect(image).toHaveAttribute("src", `data:image/png;base64,${mockBookDisponivel.imagem}`);
 
     const statusElement = screen.getByText(/Disponivel para empréstimo/i);
     expect(statusElement).toBeInTheDocument();
@@ -130,15 +141,13 @@ describe("BookDetails Component", () => {
     fireEvent.click(loanButton);
 
     expect(screen.getByTestId("loan-dialog")).toBeInTheDocument();
-
     const expectedReturnDate = format(addDays(MOCK_TODAY, 7), "dd/MM/yyyy");
-
     expect(MockedLoanDialog).toHaveBeenCalledTimes(2);
-
     expect(MockedLoanDialog).toHaveBeenLastCalledWith(
       expect.objectContaining({
         isOpen: true,
         formattedReturnDate: expectedReturnDate,
+        onOpenChange: expect.any(Function),
       }),
       undefined
     );
@@ -149,21 +158,34 @@ describe("BookDetails Component", () => {
 
     const loanButton = screen.getByRole("button", { name: /adicionar ao empréstimo/i });
     fireEvent.click(loanButton);
-
     expect(screen.getByTestId("loan-dialog")).toBeInTheDocument();
 
     const closeMockDialogButton = screen.getByRole("button", { name: "Close Mock Dialog" });
     fireEvent.click(closeMockDialogButton);
 
     expect(screen.queryByTestId("loan-dialog")).not.toBeInTheDocument();
-
     expect(MockedLoanDialog).toHaveBeenCalledTimes(3);
-
     expect(MockedLoanDialog).toHaveBeenLastCalledWith(
       expect.objectContaining({
         isOpen: false,
+        onOpenChange: expect.any(Function),
+        formattedReturnDate: format(addDays(MOCK_TODAY, 7), "dd/MM/yyyy"),
       }),
       undefined
     );
+  });
+
+  it("🖼️ should render placeholder if book image is an empty string", () => {
+    const bookWithEmptyImage = { ...mockBookDisponivel, imagem: "" };
+    render(<BookDetails book={bookWithEmptyImage} />);
+    expect(screen.getByText("Imagem não disponível")).toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: bookWithEmptyImage.titulo })).not.toBeInTheDocument();
+  });
+
+  it("🖼️ should render placeholder if book image is null", () => {
+    const bookWithNullImage = { ...mockBookDisponivel, imagem: null as any };
+    render(<BookDetails book={bookWithNullImage} />);
+    expect(screen.getByText("Imagem não disponível")).toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: bookWithNullImage.titulo })).not.toBeInTheDocument();
   });
 });

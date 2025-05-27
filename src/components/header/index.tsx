@@ -47,6 +47,7 @@ export const Header = () => {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-[#007A7C] focus:outline-none"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"} 
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -89,7 +90,10 @@ export const Header = () => {
 
         {/* Dropdown mobile */}
         {isOpen && (
-          <div className="absolute top-full right-4 bg-white shadow-md rounded-md p-4 mt-2 w-[200px] flex flex-col gap-2 z-50 md:hidden">
+          <div
+            data-testid="mobile-dropdown" // DATA-TESTID ADICIONADO
+            className="absolute top-full right-4 bg-white shadow-md rounded-md p-4 mt-2 w-[200px] flex flex-col gap-2 z-50 md:hidden"
+          >
             <Link href="#" className="text-sm text-gray-700 hover:text-black">
               Fazer login
             </Link>
