@@ -7,7 +7,9 @@ import { LoanDialog } from "@acervo/modules/book-page/components/LoanDialog";
 import { format } from "date-fns";
 
 import { Livro } from "@acervo/types/livro";
-import { getBase64ImageSrc } from "@acervo/utils/formatter"; // Ajuste este caminho se necessário
+import { getBase64ImageSrc } from "@acervo/utils/formatter";
+import { VariationHeader } from "@acervo/components/header/variation-header";
+import Footer from "@acervo/components/footer";
 
 interface Props {
   book: Livro;
@@ -22,15 +24,18 @@ export function BookDetails({ book }: Props) {
   const formattedReturnDate = format(returnDate, "dd/MM/yyyy");
 
   const assumedImageType = "image/png";
-  const imageSrc = book.imagem ? getBase64ImageSrc(book.imagem, assumedImageType) : "";
+  const imageSrc = book.imagem
+    ? getBase64ImageSrc(book.imagem, assumedImageType)
+    : "";
 
   return (
     <>
+      <VariationHeader />
       <div className="mt-20 mb-60 pt-20 px-6 max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row gap-12 justify-center items-center">
-          {imageSrc ? ( 
+          {imageSrc ? (
             <img
-              src={imageSrc} 
+              src={imageSrc}
               alt={book.titulo}
               className="rounded shadow-md max-w-[290px] w-full"
             />
@@ -40,7 +45,7 @@ export function BookDetails({ book }: Props) {
             </div>
           )}
 
-          <div className="flex flex-col justify-center items-center md:items-start w-full max-w-xl text-center md:text-left">
+          <div className="flex flex-col justify-center  items-center md:items-start w-full max-w-xl text-center md:text-left">
             <h1 className="text-xl mb-5 font-bold">Detalhes do livro</h1>
             <h2 className="text-3xl font-bold mb-4">{book.titulo}</h2>
             <p className="text-gray-700 text-base">{book.autor}</p>
@@ -91,6 +96,7 @@ export function BookDetails({ book }: Props) {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
