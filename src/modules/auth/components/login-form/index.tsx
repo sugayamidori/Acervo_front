@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Link from "next/link";
@@ -26,6 +27,7 @@ import { loginFormInputsProps } from "./types";
 import { authLogin } from "@acervo/service/auth";
 
 export const LoginForm = () => {
+  const router = useRouter();
   const schema = loginAdminSchema();
   const form = useForm<loginFormInputsProps>({
     resolver: zodResolver(schema),
@@ -48,6 +50,7 @@ export const LoginForm = () => {
           position: "bottom-right",
           style: { backgroundColor: "white", color: "#000", border: "none" },
         });
+        router.push("/");
       } else {
         toast.error("Usuário ainda não cadastrado", {
           position: "bottom-right",
