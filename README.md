@@ -5,6 +5,7 @@ Bem-vindo ao **Acervo**! Este é um projeto de sistema de gerenciamento de bibli
 ## 📝 Índice
 
 - [Visão Geral](#visão-geral)
+- [Documentação](#documentação)
 - [Pré-requisitos](#pré-requisitos)
 - [Instalação](#instalação)
 - [Configuração](#configuração)
@@ -15,6 +16,9 @@ Bem-vindo ao **Acervo**! Este é um projeto de sistema de gerenciamento de bibli
 ## 🌟 Visão Geral
 
 O Acervo tem como objetivo fornecer uma interface intuitiva e eficiente para o gerenciamento de livros e empréstimos em uma biblioteca.
+
+## 📄 Documentação
+Acesse a documentação completa do projeto clicando no link: [Acervo - Documentação](https://docs.google.com/document/d/1KCueLv0thUHedwnxijNfWYMITGJnGFffiVaE0KZhD6A/edit?usp=sharing)
 
 ## 🛠 Pré-requisitos
 
@@ -67,6 +71,7 @@ Para iniciar o servidor de desenvolvimento:
 ## ✅ Testes
 
 O projeto utiliza Jest para testes.
+Acesse a tabela com os testes unitários do projeto clicando no link: [Testes Unitários Front End](https://docs.google.com/document/d/1bOw9aeyrOs08Xpv3rC-aL31o74H0o9ZkTzekgXUPhWg/edit?usp=sharing)
 
 1.  **Rodar um teste específico em modo de observação (watch mode):**
     Este comando executa o teste e o atualiza automaticamente a cada modificação no arquivo.
